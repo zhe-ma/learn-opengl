@@ -1,0 +1,57 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "mkdir",
+      "type": "shell",
+      "command": "mkdir build || true"
+    },
+    {
+      "label": "cmake",
+      "type": "shell",
+      "command": "cmake -DCMAKE_BUILD_TYPE=debug ..",
+      "dependsOn": [
+        "mkdir"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "make",
+      "type": "shell",
+      "command": "make -j8",
+      "options": {
+        "cwd": "${workspaceFolder}/build"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/src/app/main",
+      "problemMatcher": []
+    },
+    {
+      "label": "make and run",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/src/app/main",
+      "dependsOn": [
+        "make"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/src/unittest/unittest",
+      "problemMatcher": [],
+      "dependsOn": [
+        "make"
+      ]
+    }
+  ]
+}
