@@ -59,6 +59,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}  # for configure_file
     )
 
+add_subdirectory(src/utils)
 add_subdirectory(src/learnopengl)
 
 # target_link_libraries(${PROJECT_NAME} assimp glfw
