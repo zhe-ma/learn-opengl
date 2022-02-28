@@ -4,6 +4,7 @@
 
 #include "glad/glad.h"
 #include "GLFW//glfw3.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include "utils/shader.h"
 
@@ -12,6 +13,9 @@
 static void ProcessInput(GLFWwindow* window);
 static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 static std::tuple<std::string, std::string> GetShaderPaths();
+
+static int window_width = 800;
+static int window_height = 600;
 
 int main() {
   glfwInit();
@@ -23,7 +27,7 @@ int main() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-  GLFWwindow* window = glfwCreateWindow(800, 600, "Hello Window", nullptr, nullptr);
+  GLFWwindow* window = glfwCreateWindow(window_width, window_height, "Hello Window", nullptr, nullptr);
   if (window == nullptr) {
     std::cerr << "Failed to create window" << std::endl;
     glfwTerminate();
@@ -128,6 +132,31 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.Use();
+
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)window_width / (float)window_height,
+                                            0.1f, 100.0f);
+
+//    float ratio = (float)window_width / (float)window_height;
+//    glm::mat4 projection = glm::orthoLH_ZO(-ratio, ratio, -1.0f, 1.0f, 0.1f, 100.0f);
+    shader.SetMat4("projection", projection);
+
+    float radius = 10.0f;
+//    float camera_angle = glm::radians(30.0f);
+    double camera_angle = glfwGetTime();
+    auto camera_x = static_cast<float>(radius * sin(camera_angle));
+    auto camera_z = static_cast<float>(radius * cos(camera_angle));
+
+    glm::mat4 view = glm::lookAt(glm::vec3(camera_x, 0.0f, camera_z),
+                                 glm::vec3(0.0f, 0.0f, 0.0f),
+                                 glm::vec3(0.0f, 1.0f, 0.0f));
+    shader.SetMat4("view", view);
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.0f));
+    model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    shader.SetMat4("model", model);
+
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -145,6 +174,8 @@ static void ProcessInput(GLFWwindow* window) {
 }
 
 static void FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
+  window_width = width;
+  window_height = height;
   glViewport(0, 0, width, height);
 }
 
