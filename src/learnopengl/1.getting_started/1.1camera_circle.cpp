@@ -133,19 +133,27 @@ int main() {
 
     shader.Use();
 
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)window_width / (float)window_height,
+    // 90度视野位于z-x平面，也就是视野和每个平面的夹角为45度，最近可以看到离相机0.1f的位置，最远可以到离相机100.0f的位置
+    glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)window_width / (float)window_height,
                                             0.1f, 100.0f);
 
 //    float ratio = (float)window_width / (float)window_height;
 //    glm::mat4 projection = glm::orthoLH_ZO(-ratio, ratio, -1.0f, 1.0f, 0.1f, 100.0f);
     shader.SetMat4("projection", projection);
 
-    float radius = 10.0f;
+//    float radius = 1.5f;  // radius1.5时，看到的大小就是原来的大小，可以根据视野角度，物体的位置，相机的位置得到。
 //    float camera_angle = glm::radians(30.0f);
+
+    float radius = 5.0f;
     double camera_angle = glfwGetTime();
+//    double camera_angle = 0;
     auto camera_x = static_cast<float>(radius * sin(camera_angle));
     auto camera_z = static_cast<float>(radius * cos(camera_angle));
 
+    // 相机位于x-z平面glm::vec3(camera_x, 0.0f, camera_z)，
+    // 目标位置位于原点glm::vec3(0.0f, 0.0f, 0.0f)
+    // up方向朝上glm::vec3(0.0f, 1.0f, 0.0f)
+    // 现在用的透视投影，如果相机位于glm::vec3(0.0f, 0.0f, 2.0f)，就是站在z轴2.0的位置向原点看，看到的东西就是投影的东西
     glm::mat4 view = glm::lookAt(glm::vec3(camera_x, 0.0f, camera_z),
                                  glm::vec3(0.0f, 0.0f, 0.0f),
                                  glm::vec3(0.0f, 1.0f, 0.0f));
