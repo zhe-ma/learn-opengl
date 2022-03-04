@@ -15,6 +15,9 @@ find_package(Threads REQUIRED)
 ################################################################################
 # Third party libraries
 
+# enable stb implementation
+add_definitions(-DSTB_IMAGE_IMPLEMENTATION)
+
 # glfw
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)

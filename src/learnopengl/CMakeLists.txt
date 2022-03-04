@@ -17,3 +17,9 @@ target_link_libraries(test ${LIBS})
 
 add_executable(1.1camera_circle 1.getting_started/1.1camera_circle.cpp)
 target_link_libraries(1.1camera_circle ${LIBS})
+
+add_executable(1.2texture 1.getting_started/1.2texture.cpp)
+target_link_libraries(1.2texture ${LIBS})
+
+add_executable(1.3fps_camera 1.getting_started/1.3fps_camera.cpp)
+target_link_libraries(1.3fps_camera ${LIBS})

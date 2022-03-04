@@ -1,8 +1,10 @@
-//
-// Created by Zhe Ma on 2022/2/24.
-//
+#pragma once
 
-#ifndef LEARNOPENGL_GL_UTIL_H
-#define LEARNOPENGL_GL_UTIL_H
+#include <string>
+#include "glad/glad.h"
 
-#endif //LEARNOPENGL_GL_UTIL_H
+namespace utils {
+
+GLuint LoadTexture(const std::string& image_path, GLint internal_format, GLenum format, bool flip_y);
+
+}  // namespace utils
