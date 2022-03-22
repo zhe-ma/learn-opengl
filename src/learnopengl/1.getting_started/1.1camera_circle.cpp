@@ -8,8 +8,6 @@
 
 #include "utils/shader.h"
 
-//using fs = std::filesystem;
-
 static void ProcessInput(GLFWwindow* window);
 static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 static std::tuple<std::string, std::string> GetShaderPaths();
