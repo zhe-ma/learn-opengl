@@ -41,6 +41,18 @@ option(BUILD_OPENGL3_DEMOS OFF)
 option(BUILD_UNIT_TESTS OFF)
 add_subdirectory(3rdparty/bullet)
 
+# imgui
+file(GLOB IMGUI_SRCS
+        3rdparty/imgui/*.cpp
+        3rdparty/imgui*.h
+        3rdparty/imgui/backends/imgui_impl_opengl3.h
+        3rdparty/imgui/backends/imgui_impl_opengl3.cpp
+        3rdparty/imgui/backends/imgui_impl_glfw.h
+        3rdparty/imgui/backends/imgui_impl_glfw.cpp
+        )
+
+add_library(imgui STATIC ${IMGUI_SRCS})
+
 if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
 endif()
@@ -50,7 +62,8 @@ include_directories(3rdparty/
                     3rdparty/glad/include/
                     3rdparty/glfw/include/
                     3rdparty/glm/
-                    3rdparty/spdlog/include)
+                    3rdparty/spdlog/include
+                    3rdparty/imgui)
 
 ################################################################################
 

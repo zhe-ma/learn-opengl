@@ -2,6 +2,7 @@ set(LIBS
     glfw
     glad
     utils
+    imgui
     ${GLFW_LIBRARIES}
     "${CMAKE_THREAD_LIBS_INIT}"
     )
@@ -23,3 +24,6 @@ target_link_libraries(1.2texture ${LIBS})
 
 add_executable(1.3fps_camera 1.getting_started/1.3fps_camera.cpp)
 target_link_libraries(1.3fps_camera ${LIBS})
+
+add_executable(1.4imgui_demo 1.getting_started/1.4imgui_demo.cpp)
+target_link_libraries(1.4imgui_demo ${LIBS})
